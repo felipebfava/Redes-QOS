@@ -46,8 +46,7 @@ Os principais objetivos deste laboratório são:
 # [INSERIR CAPTURA DE TELA DO qos_base.tcl AQUI]
 ```
 
-# -#- Eu fiz -#- --#
-
+![print qos_base](https://github.com/user-attachments/assets/04da06e2-f296-475c-953f-a3ff12adecb7)
 
 ### **4.2. Configuração Inicial do Wireshark**
 
