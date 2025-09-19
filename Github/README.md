@@ -42,23 +42,16 @@ Os principais objetivos deste laboratório são:
 *   Confirmei a instalação do NS2 e criei o arquivo `qos_base.tcl`.
 
 **Entrega:** Captura de tela do `qos_base.tcl` no editor de texto.
-```
-# [INSERIR CAPTURA DE TELA DO qos_base.tcl AQUI]
-```
 
-![print qos_base](https://github.com/user-attachments/assets/04da06e2-f296-475c-953f-a3ff12adecb7)
+![captura de tela do arquivo qos_base](/Github/imagens/print_qos_base.jpeg)
 
 ### **4.2. Configuração Inicial do Wireshark**
 
 *   Abri o Wireshark e selecionei a interface de rede correta para captura.
 
 **Entrega:** Captura de tela do Wireshark com a interface de captura selecionada.
-```
-# [INSERIR CAPTURA DE TELA DO WIRESHARK COM INTERFACE SELECIONADA AQUI]
-```
 
-# -#- Eu fiz -#- --#
-
+![captura de tela do Wireshark mostrando a interface selecionada](/Github/imagens/print_wireshark_interface_selecionada.jpeg)
 
 ---
 
@@ -72,20 +65,14 @@ Os principais objetivos deste laboratório são:
 
 **Entrega:** O código `lab_latencia.tcl` utilizado.
 ```tcl
-# [INSERIR CÓDIGO DO lab_latencia.tcl AQUI]
+# [Conferir arquivo lab_latencia.tcl]
 ```
-
-# -#- Eu fiz -#- --#
-
 
 ### **5.2. Análise da Latência no Arquivo de Trace (.tr)**
 
 *   Analisei o arquivo `lab_latencia.tr`, identificando o envio e recebimento de pacotes para calcular a latência de ponta a ponta.
 
 **Entrega:** Trecho do arquivo `.tr` destacando um pacote enviado e seu respectivo recebimento.
-```
-# [INSERIR TRECHO DO ARQUIVO .tr AQUI (EX: + 0.5 ... e r 0.618 ...)]
-```
 
 # -#- Trecho do Arquivo -#- --#
 
@@ -99,8 +86,6 @@ r 1.018 0 1 cbr 1000 ------- 0 0.0 1.0 1 1
 Onde:
 O último número indica o id do pacote, nesse caso, sobre o pacote 1
 "+" significa que o pacote está enfileirado, "-" significa que o pacote foi retirado da fila, e "r" significa a receber (na saída do link), isso é, a comprovação que o pacote foi recebido.
-
-# -#- Eu fiz -#- --#
 
 
 **Cálculos da Latência:**
@@ -158,17 +143,19 @@ r 1.278 0 1 cbr 1000 ------- 0 0.0 1.0 27 27
 **Entregas:**
 
 1.  Captura de tela do Wireshark mostrando a captura inicial de pacotes.
-    ```
-    # [INSERIR CAPTURA DE TELA DA CAPTURA INICIAL AQUI]
-    ```
+
+![captura de tela da captura inicial de pacotes no wireshark](/Github/imagens/print_wireshark_captura_inicial.jpeg)
+
+
 2.  Captura de tela do Wireshark mostrando o filtro `rtcp` aplicado.
-    ```
-    # [INSERIR CAPTURA DE TELA DO FILTRO RTCP APLICADO AQUI]
-    ```
+
+![captura de tela da captura inicial do wireshark com o filtro selecionado](/Github/imagens/print_wireshark_captura_filtrada.jpeg)
+
 3.  Captura de tela dos detalhes de um pacote **Receiver Report (RR)**, com os campos `Fraction Lost`, `Cumulative Number of Packets Lost` e `Interarrival Jitter` claramente visíveis.
-    ```
-    # [INSERIR CAPTURA DE TELA DOS DETALHES DO PACOTE RR AQUI]
-    ```
+
+![captura de tela da captura inicial do wireshark com os campos jitter, fraction lost e cumulative visíveis](/Github/imagens/print_wireshark_campos1.jpeg)
+
+![captura de tela da captura inicial do wireshark para confirmação dos campos jitter, fraction lost e cumulative](/Github/imagens/print_wireshark_campos2.jpeg)
 
 **Valores Observados:**
 
@@ -209,17 +196,12 @@ r 1.278 0 1 cbr 1000 ------- 0 0.0 1.0 27 27
 
 **Entrega:** O código `lab_throughput_responsividade.tcl` utilizado.
 ```tcl
-# [INSERIR CÓDIGO DO lab_throughput_responsividade.tcl AQUI]
+# [Conferir arquivo lab_throughput_responsividade.tcl]
 ```
-
-# -#- Eu fiz -#- --#
-
 
 ### **7.2. Análise do Throughput e Responsividade**
 
 *   Analisei o arquivo `lab_throughput_responsividade.tr` para calcular o throughput do FTP e a latência de cada ping.
-
-# -#- Eu fiz -#- --#
 
 **Cálculos Detalhados do Throughput do FTP:**
 *   Número de pacotes TCP recebidos: 3702
@@ -227,7 +209,7 @@ r 1.278 0 1 cbr 1000 ------- 0 0.0 1.0 27 27
 *   Tempo total da simulação para FTP (stop - start): [0.5 até 4.5 = 4] foram 4 segundos
 *   Throughput = (Número de pacotes * Tamanho do pacote) / Tempo
 *   Throughput = (3702 * 1040) / 4
-*   Throughput (em Kbps/Mbps): [962 520]
+*   Throughput (em Kbps/Mbps): 962520 = 962,52Kbps 
 
 **Cálculos da Latência para cada pacote Ping e Impacto do FTP:**
 
@@ -243,27 +225,28 @@ Latência = Timestamp Recebimento - Timestamp Envio
 | 4       | [1.030954]      | [1.041005]            | [0,010051]    | [Nenhum impacto significativo]     |
 | 5       | [1.300435]      | [1.310486]            | [0,010051]    | [Nenhum impacto significativo]     |
 
-## 1° ping
+
+### 1° ping
 + 1 0 1 ping 64 ------- 2 0.1 3.0 -1 344
 - 1.0008 0 1 ping 64 ------- 2 0.1 3.0 -1 344
 r 1.010851 0 1 ping 64 ------- 2 0.1 3.0 -1 344
 
-## 2° ping
+### 2° ping
 + 1.010851 1 3 ping 64 ------- 2 0.1 3.0 -1 344
 - 1.010851 1 3 ping 64 ------- 2 0.1 3.0 -1 344
 r 1.020902 1 3 ping 64 ------- 2 0.1 3.0 -1 344
 
-## 3° ping
+### 3° ping
 + 1.020902 3 1 ping 64 ------- 2 3.0 0.1 -1 364
 - 1.020902 3 1 ping 64 ------- 2 3.0 0.1 -1 364
 r 1.030954 3 1 ping 64 ------- 2 3.0 0.1 -1 364
 
-## 4° ping
+### 4° ping
 + 1.030954 1 0 ping 64 ------- 2 3.0 0.1 -1 364
 - 1.030954 1 0 ping 64 ------- 2 3.0 0.1 -1 364
 r 1.041005 1 0 ping 64 ------- 2 3.0 0.1 -1 364
 
-## 5° ping
+### 5° ping
 + 1.3 0 1 ping 64 ------- 2 0.1 3.0 -1 635
 - 1.300435 0 1 ping 64 ------- 2 0.1 3.0 -1 635
 r 1.310486 0 1 ping 64 ------- 2 0.1 3.0 -1 635
@@ -275,7 +258,7 @@ r 1.310486 0 1 ping 64 ------- 2 0.1 3.0 -1 635
     *   O ping é mais sensível, pelo atraso do retorno do ACK comparado aos vários pacotes FTP enviados. Se houver atraso na rede, isso é imediatamente visível no tempo de resposta do Ping.
 
 2.  **Como o throughput do FTP foi afetado pela capacidade do link?**
-    *  Pois, a capacidade máxima do canal (10 Mbps) limitou o throughput máximo, representando aproximadamente 10% da capacidade total do link.
+    *   Pois, a capacidade máxima do canal (10 Mbps) limitou o throughput máximo, representando aproximadamente 10% da capacidade total do link.
     Throughput quase 1 Mbps para a capacidade do Link de 10 Mbps, representando 10%.
 
 3.  **Em um cenário de telecirurgia, qual seria a prioridade: alto throughput para o vídeo HD (Pablo) ou alta responsividade para os comandos do bisturi (Flash)? Justifique.**
@@ -291,27 +274,17 @@ r 1.310486 0 1 ping 64 ------- 2 0.1 3.0 -1 635
 
 *   Criei e executei o script `lab_perda.tcl`, ajustando a taxa de erro de bit (`rate_`) para diferentes valores (ex: 1e-2, 1e-5) no `ErrorModel`.
 
-# -#- Eu fiz -#- --#
-
 **Entrega:** O código `lab_perda.tcl` utilizado.
 ```tcl
-# [INSERIR CÓDIGO DO lab_perda.tcl AQUI]
+# [Conferir Arquivo lab_perda.tcl]
 ```
-
-# -#- Eu fiz -#- --#
 
 ### **8.2. Análise da Perda de Pacotes no Arquivo de Trace (.tr)**
 
 *   Analisei o arquivo `lab_perda.tr` para calcular a taxa de perda de pacotes UDP e observar o comportamento do TCP.
 
-# -#- Eu fiz -#- --#
 
 **Cálculos da Taxa de Perda de Pacotes UDP:**
-
-Como calcular:
-Para UDP - São os pacotes CBR (constant bit rate)
-Taxa de perda de pacotes UDP:
-(Enviados - Recebidos) / Enviados
 
 | `rate_` Configurado (ErrorModel) | Pacotes UDP Enviados | Pacotes UDP Recebidos | Pacotes Perdidos | Taxa de Perda (%) |
 | :------------------------------- | :------------------- | :-------------------- | :--------------- | :---------------- |
@@ -319,7 +292,11 @@ Taxa de perda de pacotes UDP:
 | [Valor 2 (e.g., 1e-5)]           | [1123]               | [1119]                | [4]              | [0,356%]          |
 
 
-# Fazer conta para o segundo valor
+Para UDP - São os pacotes CBR (constant bit rate)
+
+Taxa de perda de pacotes UDP:
+(Enviados - Recebidos) / Enviados
+
 
 **Descrição do Comportamento do TCP:**
 *   [Descreva o que você observou no trace file para o TCP, mencionando eventos de retransmissão (R) e ACKs, e como ele se diferencia do UDP em termos de entrega final]
@@ -330,8 +307,10 @@ Vemos uma entrega constante de pacotes via constant bit rate (representando o pr
 
 1.  **Qual protocolo (UDP ou TCP) é mais afetado pela perda de pacotes em termos de entrega final? Por quê?**
     *   O protocolo TCP é mais afetado pela perda de pacotes. Pois, percebe a perda de pacotes e faz o reenvio deles. Esse processo de retransmissão pode afetar a performance geral levar a latência na rede.
+
 2.  **Como a taxa de perda configurada no script (`rate_`) se compara à taxa de perda observada para o UDP?**
-    *   A taxa de perda observada é muito maior (57,3%) comparado a taxa de perda do script (1%). Isso pode nos dizer que outros importantes fatores podem estar relacionados a essa perda, como congestionamento e desempenho do link.
+    *   A taxa de perda configurada no script (1e-2 ou 1e-5) é a probabilidade de erro por bit num pacote. Entretanto, podemos observar que a taxa de perda observada é impactada pela taxa de erro de bit. Mas, com uma taxa mais alta (1e-2) tivemos uma perda mais baixa.
+
 3.  **Dê exemplos de aplicações que toleram alta perda de pacotes e aplicações que não toleram nenhuma perda.**
     *   Aplicações que toleram perdas:
     DNS (resolução de nomes de domínio) e SNMP (monitoramento de dispositivos). A perda de pacotes para ambos é tolerável, visto que suas retransmissões são rápidas e não custosas.
@@ -346,6 +325,7 @@ Vemos uma entrega constante de pacotes via constant bit rate (representando o pr
 ### **Síntese do Aprendizado**
 
 *   [Escreva uma síntese dos principais aprendizados sobre a relação entre os parâmetros de QoS (latência, jitter, throughput, perda) e o desempenho de diferentes aplicações, utilizando os resultados dos experimentos. Faça um link com a **narrativa da telecirurgia** e proponha uma **solução baseada em QoS** para otimizar o desempenho das aplicações críticas nesse cenário desafiador (vídeo HD, comandos táteis, voz, dados do paciente).]
+
 
 
     Latência é medida em milissegundos (ms), representa o tempo total para um pacote ir da origem ao destino.
@@ -396,10 +376,5 @@ Entende-se que unir uma característica TCP ao UDP, pode ser realizada utilizand
 | [Valor 1 (e.g., 1e-2)]           | [1123]               | [1120]                | [3]              | [0,267%]          |
 | [Valor 2 (e.g., 1e-5)]           | [1123]               | [1119]                | [4]              | [0,356%]          |
 
-
-
-**Instruções Finais para os Alunos:**
-*   Preencha todas as seções marcadas com `[ ]` com suas informações e análises.
-*   Converta este arquivo Markdown para PDF para a entrega final, garantindo que todas as imagens e formatações estejam corretas.
 
 ---
