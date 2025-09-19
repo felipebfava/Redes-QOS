@@ -231,33 +231,39 @@ r 1.278 0 1 cbr 1000 ------- 0 0.0 1.0 27 27
 
 **Cálculos da Latência para cada pacote Ping e Impacto do FTP:**
 
+Como calcular:
+
+Latência = Timestamp Recebimento - Timestamp Envio
+
 | Ping Nº | Timestamp Envio | Timestamp Recebimento | Latência (ms) | Observações sobre o Impacto do FTP |
 | :------ | :-------------- | :-------------------- | :------------ | :--------------------------------- |
-| 1       | [Valor]         | [Valor]               | [Resultado]   | [Análise]                          |
-| 2       | [Valor]         | [Valor]               | [Resultado]   | [Análise]                          |
-| ...     | ...             | ...                   | ...           | ...                                |
+| 1       | [1.0008]        | [1.010851]            | [0,010051]    | [Nenhum impacto significativo]     |
+| 2       | [1.010851]      | [1.020902]            | [0,010051]    | [Nenhum impacto significativo]     |
+| 3       | [1.020902]      | [1.030954]            | [0,010052]    | [Nenhum impacto significativo]     |
+| 4       | [1.030954]      | [1.041005]            | [0,010051]    | [Nenhum impacto significativo]     |
+| 5       | [1.300435]      | [1.310486]            | [0,010051]    | [Nenhum impacto significativo]     |
 
-# 1° ping
+## 1° ping
 + 1 0 1 ping 64 ------- 2 0.1 3.0 -1 344
 - 1.0008 0 1 ping 64 ------- 2 0.1 3.0 -1 344
 r 1.010851 0 1 ping 64 ------- 2 0.1 3.0 -1 344
 
-# 2° ping
+## 2° ping
 + 1.010851 1 3 ping 64 ------- 2 0.1 3.0 -1 344
 - 1.010851 1 3 ping 64 ------- 2 0.1 3.0 -1 344
 r 1.020902 1 3 ping 64 ------- 2 0.1 3.0 -1 344
 
-# 3° ping
+## 3° ping
 + 1.020902 3 1 ping 64 ------- 2 3.0 0.1 -1 364
 - 1.020902 3 1 ping 64 ------- 2 3.0 0.1 -1 364
 r 1.030954 3 1 ping 64 ------- 2 3.0 0.1 -1 364
 
-# 4° ping
+## 4° ping
 + 1.030954 1 0 ping 64 ------- 2 3.0 0.1 -1 364
 - 1.030954 1 0 ping 64 ------- 2 3.0 0.1 -1 364
 r 1.041005 1 0 ping 64 ------- 2 3.0 0.1 -1 364
 
-# 5° ping
+## 5° ping
 + 1.3 0 1 ping 64 ------- 2 0.1 3.0 -1 635
 - 1.300435 0 1 ping 64 ------- 2 0.1 3.0 -1 635
 r 1.310486 0 1 ping 64 ------- 2 0.1 3.0 -1 635
@@ -267,9 +273,11 @@ r 1.310486 0 1 ping 64 ------- 2 0.1 3.0 -1 635
 
 1.  **Qual aplicação (FTP ou Ping) é mais sensível à latência? Por quê?**
     *   O ping é mais sensível, pelo atraso do retorno do ACK comparado aos vários pacotes FTP enviados. Se houver atraso na rede, isso é imediatamente visível no tempo de resposta do Ping.
+
 2.  **Como o throughput do FTP foi afetado pela capacidade do link?**
-    *   Pois, segundo a largura de banda disponível, a capacidade máxima do canal de comunicação limita o throughput máximo possível.
-    Logo, o throughput será limitado com a nossa largura de banda de 10 Mbps.
+    *  Pois, a capacidade máxima do canal (10 Mbps) limitou o throughput máximo, representando aproximadamente 10% da capacidade total do link.
+    Throughput quase 1 Mbps para a capacidade do Link de 10 Mbps, representando 10%.
+
 3.  **Em um cenário de telecirurgia, qual seria a prioridade: alto throughput para o vídeo HD (Pablo) ou alta responsividade para os comandos do bisturi (Flash)? Justifique.**
     *   O mais alarmante entre essas duas opções, vai depender do cenário da cirurgia e dos técnicos ali habilitados. Num primeiro momento os comandos do bisturi devem ser priorizados, pois devem vir de comandos precisos e delicados, deixando o vídeo com uma qualidade baixa. Porém, quando não estiver usando o bisturi (algo que exige profissionalismo), pode-se alterar para a alta qualidade de vídeo.
 
@@ -315,6 +323,8 @@ Taxa de perda de pacotes UDP:
 
 **Descrição do Comportamento do TCP:**
 *   [Descreva o que você observou no trace file para o TCP, mencionando eventos de retransmissão (R) e ACKs, e como ele se diferencia do UDP em termos de entrega final]
+
+Vemos uma entrega constante de pacotes via constant bit rate (representando o protocolo UDP), sem se importar se o pacote chegou realmente ao destino, sua entrega é rápida, porém não segura, sem retransmissões ou ACKs de confirmação. Diferentemente do que vemos no TCP, temos uma entrega não tão rápida, porém confiável, até mesmo com o estabelecimento da comunicação (pacote inicial), vemos um controle no TCP como retransmissões e recuperações rápidas.
 
 ### **8.3. Perguntas para Refletir e Discutir**
 
