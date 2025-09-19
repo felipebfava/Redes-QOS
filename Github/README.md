@@ -300,20 +300,16 @@ r 1.310486 0 1 ping 64 ------- 2 0.1 3.0 -1 635
 
 **Cálculos da Taxa de Perda de Pacotes UDP:**
 
-| `rate_` Configurado (ErrorModel) | Pacotes UDP Enviados | Pacotes UDP Recebidos | Pacotes Perdidos | Taxa de Perda (%) |
-| :------------------------------- | :------------------- | :-------------------- | :--------------- | :---------------- |
-| [Valor 1 (e.g., 1e-2)]           | [1123]               | [1120]                | [3]              | [57,3%]           |
-| [Valor 2 (e.g., 1e-5)]           | [1123]               | [1119]                | [4]              | [Resultado]       |
-
-
-
+Como calcular:
 Para UDP - São os pacotes CBR (constant bit rate)
-qtd enviados UDP = 2623
-qtd recebidos UDP = 1120
-
 Taxa de perda de pacotes UDP:
 (Enviados - Recebidos) / Enviados
-(2623 - 1120) / 2623 = 0,573
+
+| `rate_` Configurado (ErrorModel) | Pacotes UDP Enviados | Pacotes UDP Recebidos | Pacotes Perdidos | Taxa de Perda (%) |
+| :------------------------------- | :------------------- | :-------------------- | :--------------- | :---------------- |
+| [Valor 1 (e.g., 1e-2)]           | [1123]               | [1120]                | [3]              | [0,267%]          |
+| [Valor 2 (e.g., 1e-5)]           | [1123]               | [1119]                | [4]              | [0,356%]          |
+
 
 # Fazer conta para o segundo valor
 
@@ -341,7 +337,56 @@ Taxa de perda de pacotes UDP:
 
 *   [Escreva uma síntese dos principais aprendizados sobre a relação entre os parâmetros de QoS (latência, jitter, throughput, perda) e o desempenho de diferentes aplicações, utilizando os resultados dos experimentos. Faça um link com a **narrativa da telecirurgia** e proponha uma **solução baseada em QoS** para otimizar o desempenho das aplicações críticas nesse cenário desafiador (vídeo HD, comandos táteis, voz, dados do paciente).]
 
----
+
+    Latência é medida em milissegundos (ms), representa o tempo total para um pacote ir da origem ao destino.
+Uma alta latência afeta a responsividade, isso é, a capacidade do sistema de responder a comandos ou solicitações de forma rápida, como os comandos médicos.
+Vemos nesse laboratório que a latência aumenta conforme o atraso do link / conexão. Algo como uma telecirurgia a distância (Tóquio ao Brasil) teria um atraso de link alto.
+
+| `link_delay` Configurado | Timestamp Envio | Timestamp Recebimento | Latência Calculada |
+| :----------------------- | :-------------- | :-------------------- | :----------------- |
+| [Valor 1 (e.g., 10ms)]   | [0,69]          | [0,708]               | [0,018]            |
+| [Valor 2 (e.g., 100ms)]  | [0,85]          | [0,958]               | [0,108]            |
+| [Valor 3 (e.g., 500ms)]  | [0,77]          | [1,278]               | [0,508]            |
+
+
+
+    Jitter é a variação no atraso da entrega de pacotes, isso é, os pacotes chegam ao destino com atraso irregular, afetando o desempenho de aplicações em tempo real, como chamadas de voz (VoIP) e videoconferências, resultando em áudio cortado, vídeo com falhas ou congelado e atrasos na comunicação.
+
+Vemos nesse laboratório que mesmo com uma chamada local básica do Google Meet, temos um Jitter e uma fração de perda maiores do que o aceitável. Logo, a telecirurgia teria graves problemas, como comandos por áudio terem ruídos ou serem incompletos, ou o vídeo ficar congelado na maioria do tempo.
+
+*   **Interarrival Jitter:** 1550922407 ms -> são quase 18 dias
+*   **Fraction Lost:** 83 / 256 = 0,32422 x100 = 32,422% (ou % se convertido)
+*   **Cumulative Number of Packets Lost:** 6701384
+
+
+
+    Throughput é medida em bits por segundo (bps), kilobits por segundo (Kbps) ou megabits por segundo (Mbps). Representa a capacidade efetiva de transferência de dados, considerando perdas, retransmissões e overhead de protocolos (quantidade real de dados).
+
+Vemos nesse laboratório que o valor de Throughput chega perto de 1Mbps, que ao ser comparado com valores de outras redes, chega perto de um rede wi-fi 4G. Neste contexto, vemos a importância de uma boa infraestrutura das redes e seus processamentos intermediários. Pois a divisão pelo tempo é por parte impactada pelo processamento de dispositivos intermediários (roteadores, switches, servidores, NATs...), e a capacidade do link pode oferecer com que pacotes maiores sejam transportados por vez. Aumentando o Throughput da rede. 
+
+*   Número de pacotes TCP recebidos: 3702
+*   Tamanho do pacote TCP (padrão NS2): 512 bytes (ou especifique se diferente) 1040
+*   Tempo total da simulação para FTP (stop - start): [0.5 até 4.5 = 4] foram 4 segundos
+*   Throughput = (Número de pacotes * Tamanho do pacote) / Tempo
+*   Throughput = (3702 * 1040) / 4
+*   Throughput (em Kbps/Mbps): 962520 = 962,52Kbps 
+
+
+
+    Tolerância a perdas é a capacidade de uma aplicação continuar funcionando mesmo que pacotes sejam perdidos durante a transmissão. Diferentes aplicações possuem níveis distintos de tolerância, determinando como devem ser priorizadas e protegidas pelos mecanismos de QoS.
+
+Vemos nesse laboratório algo meio distinto, pois ao diminuirmos a taxa de erro por bit, a taxa de perda aumentou (deveria abaixar), nesse caso a perda aumenta em 1 pacote, sendo aceitável. Porém, considerando uma taxa de perda alta, teremos problemas na telecirurgia, pois podemos ter falhas nos comandos ou perda da qualidade de vídeo. Para tolerar essas perdas, deve-se ter retransmissões rápidas (Fast Retransmit - qualidade do TCP), redundâncias na rede e priorização de tráfego crítico. Claro, transmissões como a telecirurgia devem-se usar do protocolo UDP, por oferecer baixa latência, sem overhead de cabeçalhos. Porém, sem garantia de entrega.
+
+Entende-se que unir uma característica TCP ao UDP, pode ser realizada utilizando protocolos como o QUIC/UDP criado pelo Google.
+
+*Explicações sobre o protocolo QUIC/UDP fogem do escopo deste laboratório, porém cabe em explicações futuras*
+
+| `rate_` Configurado (ErrorModel) | Pacotes UDP Enviados | Pacotes UDP Recebidos | Pacotes Perdidos | Taxa de Perda (%) |
+| :------------------------------- | :------------------- | :-------------------- | :--------------- | :---------------- |
+| [Valor 1 (e.g., 1e-2)]           | [1123]               | [1120]                | [3]              | [0,267%]          |
+| [Valor 2 (e.g., 1e-5)]           | [1123]               | [1119]                | [4]              | [0,356%]          |
+
+
 
 **Instruções Finais para os Alunos:**
 *   Preencha todas as seções marcadas com `[ ]` com suas informações e análises.
